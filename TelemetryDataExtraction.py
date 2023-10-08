@@ -17,3 +17,8 @@
 #  Vuze (VuzeXR)
 #  KanDao (Obisidian Pro)
 #  CAMM format
+
+import telemetry_parser
+tp = telemetry_parser.Parser('./media/gopro.mp4')
+telemetry = tp.telemetry()
+print(telemetry)
