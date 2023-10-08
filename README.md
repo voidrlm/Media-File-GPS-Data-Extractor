@@ -5,3 +5,4 @@ Allows users to extract GPS data from images and video files effortlessly. This 
 Required Packages To Install
 pip install pillow
 pip install pyexiftool
+pip install telemetry_parser
