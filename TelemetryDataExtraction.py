@@ -21,4 +21,6 @@
 import telemetry_parser
 tp = telemetry_parser.Parser('./media/gopro.mp4')
 telemetry = tp.telemetry()
-print(telemetry)
+gps_data = telemetry[1]['GPS']
+for data in gps_data['Data']:
+    print(f'{data[0]} {data[1]}')
