@@ -19,8 +19,23 @@
 #  CAMM format
 
 import telemetry_parser
-tp = telemetry_parser.Parser('./media/gopro.mp4')
-telemetry = tp.telemetry()
-gps_data = telemetry[1]['GPS']
-for data in gps_data['Data']:
-    print(f'{data[0]} {data[1]}')
+
+try:
+    tp = telemetry_parser.Parser('./media/gopro.mp4')
+    telemetry = tp.telemetry()
+
+    if len(telemetry) >= 2 and 'GPS' in telemetry[1]:
+        gps_data = telemetry[1]['GPS']
+
+        if 'Data' in gps_data:
+            for data in gps_data['Data']:
+                print(f'Latitude: {data[0]} Longitute: {data[1]}')
+        else:
+            print("GPS data not found in telemetry.")
+    else:
+        print("Telemetry data format not as expected.")
+
+except FileNotFoundError:
+    print("File not found. Please check the file path.")
+except Exception as e:
+    print(f"An error occurred: {str(e)}")
