@@ -21,15 +21,21 @@
 import telemetry_parser
 
 try:
+    # Initialize the telemetry parser with the video file path
     tp = telemetry_parser.Parser('./media/gopro.mp4')
+
+    # Get the telemetry data
     telemetry = tp.telemetry()
 
+    # Check if telemetry data is available and contains GPS data
     if len(telemetry) >= 2 and 'GPS' in telemetry[1]:
         gps_data = telemetry[1]['GPS']
 
+        # Check if GPS data contains 'Data'
         if 'Data' in gps_data:
             for data in gps_data['Data']:
-                print(f'Latitude: {data[0]} Longitute: {data[1]}')
+                # Print latitude and longitude
+                print(f'Latitude: {data[0]} Longitude: {data[1]}')
         else:
             print("GPS data not found in telemetry.")
     else:
@@ -37,5 +43,7 @@ try:
 
 except FileNotFoundError:
     print("File not found. Please check the file path.")
+except telemetry_parser.TelemetryParserError as e:
+    print(f"Telemetry parsing error: {str(e)}")
 except Exception as e:
     print(f"An error occurred: {str(e)}")
