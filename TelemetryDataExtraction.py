@@ -23,7 +23,7 @@ import telemetry_parser
 try:
     # Initialize the telemetry parser with the video file path
     tp = telemetry_parser.Parser('./media/gopro.mp4')
-
+    frequency = 'high'  # ADJUST YOUR FREQUENCY HERE (low or high)
     # Get the telemetry data
     telemetry = tp.telemetry()
     count = 0
@@ -31,14 +31,19 @@ try:
         if "GPS" in obj:
             if "Data" in obj['GPS']:
                 gpsData = obj['GPS']['Data']
-                if len(gpsData) % 2 == 0:  # Array has an even number of elements
-                    # Choose the left middle element
-                    middle_element = gpsData[len(gpsData) // 2 - 1]
-                else:  # Array has an odd number of elements
-                    # Choose the exact middle element
-                    middle_element = gpsData[len(gpsData) // 2]
-                print(
-                    f'Latitude: {middle_element[0]} Longitude: {middle_element[1]}')
+                if (frequency == "low"):
+                    if len(gpsData) % 2 == 0:  # Array has an even number of elements
+                        # Choose the left middle element
+                        middle_element = gpsData[len(gpsData) // 2 - 1]
+                    else:  # Array has an odd number of elements
+                        # Choose the exact middle element
+                        middle_element = gpsData[len(gpsData) // 2]
+                    print(
+                        f'Latitude: {middle_element[0]} Longitude: {middle_element[1]}')
+                else:
+                    for data in gpsData:
+                        print(f'Latitude: {data[0]} Longitude: {data[1]}')
+
 
 except FileNotFoundError:
     print("File not found. Please check the file path.")
