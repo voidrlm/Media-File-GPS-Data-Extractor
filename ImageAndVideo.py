@@ -26,8 +26,8 @@ def main():
     if isinstance(gps_data, str):
         print(f"Error: {gps_data}")
     else:
-        print("Latitude " + str(gps_data[0]['EXIF:GPSLatitude']))
-        print("Longitude " + str(gps_data[0]['EXIF:GPSLongitude']))
+        print("Latitude " + str(gps_data[0]['Composite:GPSLatitude']))
+        print("Longitude " + str(gps_data[0]['Composite:GPSLongitude']))
 
 
 if __name__ == "__main__":
