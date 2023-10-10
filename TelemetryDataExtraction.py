@@ -26,24 +26,21 @@ try:
 
     # Get the telemetry data
     telemetry = tp.telemetry()
-
-    # Check if telemetry data is available and contains GPS data
-    if len(telemetry) >= 2 and 'GPS' in telemetry[1]:
-        gps_data = telemetry[1]['GPS']
-
-        # Check if GPS data contains 'Data'
-        if 'Data' in gps_data:
-            for data in gps_data['Data']:
-                # Print latitude and longitude
-                print(f'Latitude: {data[0]} Longitude: {data[1]}')
-        else:
-            print("GPS data not found in telemetry.")
-    else:
-        print("Telemetry data format not as expected.")
+    count = 0
+    for obj in telemetry:
+        if "GPS" in obj:
+            if "Data" in obj['GPS']:
+                gpsData = obj['GPS']['Data']
+                if len(gpsData) % 2 == 0:  # Array has an even number of elements
+                    # Choose the left middle element
+                    middle_element = gpsData[len(gpsData) // 2 - 1]
+                else:  # Array has an odd number of elements
+                    # Choose the exact middle element
+                    middle_element = gpsData[len(gpsData) // 2]
+                print(
+                    f'Latitude: {middle_element[0]} Longitude: {middle_element[1]}')
 
 except FileNotFoundError:
     print("File not found. Please check the file path.")
-except telemetry_parser.TelemetryParserError as e:
-    print(f"Telemetry parsing error: {str(e)}")
 except Exception as e:
     print(f"An error occurred: {str(e)}")
