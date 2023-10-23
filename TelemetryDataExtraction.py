@@ -39,10 +39,11 @@ try:
                         # Choose the exact middle element
                         middle_element = gpsData[len(gpsData) // 2]
                     print(
-                        f'Latitude: {middle_element[0]} Longitude: {middle_element[1]}')
+                        f'Latitude: {middle_element[0]/ 10000000} Longitude: {middle_element[1]/ 10000000}')
                 else:
                     for data in gpsData:
-                        print(f'Latitude: {data[0]} Longitude: {data[1]}')
+                        print(
+                            f'Latitude: {data[0]/ 10000000} Longitude: {data[1]/ 10000000}')
 
 
 except FileNotFoundError:
