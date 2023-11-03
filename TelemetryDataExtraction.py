@@ -22,29 +22,42 @@ import telemetry_parser
 
 try:
     # Initialize the telemetry parser with the video file path
-    tp = telemetry_parser.Parser('./media/gopro.mp4')
+    tp = telemetry_parser.Parser('./media/gopro1.mp4')
+
     frequency = 'high'  # ADJUST YOUR FREQUENCY HERE (low or high)
+
+    # Initialize an empty array to store latitude and longitude objects
+    gps_data_array = []
+
     # Get the telemetry data
     telemetry = tp.telemetry()
-    count = 0
+
     for obj in telemetry:
         if "GPS" in obj:
             if "Data" in obj['GPS']:
                 gpsData = obj['GPS']['Data']
                 if (frequency == "low"):
                     if len(gpsData) % 2 == 0:  # Array has an even number of elements
-                        # Choose the left middle element
                         middle_element = gpsData[len(gpsData) // 2 - 1]
+                        latitude = middle_element[0] / 10000000
+                        longitude = middle_element[1] / 10000000
+                        gps_data_array.append(
+                            {"latitude": latitude, "longitude": longitude})
                     else:  # Array has an odd number of elements
-                        # Choose the exact middle element
                         middle_element = gpsData[len(gpsData) // 2]
-                    print(
-                        f'Latitude: {middle_element[0]/ 10000000} Longitude: {middle_element[1]/ 10000000}')
+                        latitude = middle_element[0] / 10000000
+                        longitude = middle_element[1] / 10000000
+                        gps_data_array.append(
+                            {"latitude": latitude, "longitude": longitude})
                 else:
                     for data in gpsData:
-                        print(
-                            f'Latitude: {data[0]/ 10000000} Longitude: {data[1]/ 10000000}')
+                        latitude = data[0] / 10000000
+                        longitude = data[1] / 10000000
+                        gps_data_array.append(
+                            {"latitude": latitude, "longitude": longitude})
 
+    # Now, gps_data_array contains an array of objects, each with 'latitude' and 'longitude' keys.
+    print("GPS Data Array:", gps_data_array)
 
 except FileNotFoundError:
     print("File not found. Please check the file path.")
