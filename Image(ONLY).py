@@ -1,3 +1,4 @@
+# This Python script leverages Pillow for extracting GPS metadata from images
 from PIL import Image
 from PIL.ExifTags import TAGS, GPSTAGS
 

@@ -1,3 +1,4 @@
+# This Python script leverages ExifTool for extracting GPS metadata from both images and videos, streamlining the process through effective use of its capabilities.
 import exiftool
 
 
