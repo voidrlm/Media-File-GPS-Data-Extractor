@@ -22,7 +22,7 @@ import telemetry_parser
 
 try:
     # Initialize the telemetry parser with the video file path
-    tp = telemetry_parser.Parser('./media/gopro1.mp4')
+    tp = telemetry_parser.Parser('./media/test.MP4')
 
     # ADJUST YOUR FREQUENCY HERE (low or high).This is used to adjust the total number of output values.High provides all the latitude and longitude of all the intervals recorded
     frequency = 'high'
@@ -40,29 +40,32 @@ try:
                 if (frequency == "low"):
                     if len(gpsData) % 2 == 0:  # Array has an even number of elements
                         middle_element = gpsData[len(gpsData) // 2 - 1]
-                        latitude = middle_element[0] / 10000000 #conversion to decimal
+                        # conversion to decimal
+                        latitude = middle_element[0] / 10000000
                         # conversion to decimal
                         longitude = middle_element[1] / 10000000
                         gps_data_array.append(
                             {"latitude": latitude, "longitude": longitude})
                     else:  # Array has an odd number of elements
                         middle_element = gpsData[len(gpsData) // 2]
-                        latitude = middle_element[0] / 10000000 #conversion to decimal
-                        longitude = middle_element[1] / 10000000 #conversion to decimal
+                        # conversion to decimal
+                        latitude = middle_element[0] / 10000000
+                        # conversion to decimal
+                        longitude = middle_element[1] / 10000000
                         gps_data_array.append(
                             {"latitude": latitude, "longitude": longitude})
                 else:
                     for data in gpsData:
-                        latitude = data[0] / 10000000  #conversion to decimal
-                        longitude = data[1] / 10000000 #conversion to decimal
+                        latitude = data[0] / 10000000  # conversion to decimal
+                        longitude = data[1] / 10000000  # conversion to decimal
                         gps_data_array.append(
                             {"latitude": latitude, "longitude": longitude})
 
     # Now, gps_data_array contains an array of objects, each with 'latitude' and 'longitude' keys.
     print("GPS Data Array:", gps_data_array)
-#file not found exception
+# file not found exception
 except FileNotFoundError:
     print("File not found. Please check the file path.")
-#unknown exception
+# unknown exception
 except Exception as e:
     print(f"An error occurred: {str(e)}")
